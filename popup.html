@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>দাঁড়িকমা প্রিন্ট হেল্পার</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 320px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 16px 18px;
+      text-align: center;
+    }
+
+    .header h1 { font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    .header p { font-size: 11px; opacity: 0.85; margin-top: 3px; }
+
+    .body { padding: 16px; }
+
+    .field-group { margin-bottom: 12px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #1e293b;
+      background: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus, select:focus { border-color: #6366f1; }
+
+    .checkbox-group { display: flex; flex-direction: column; gap: 7px; }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 15px; height: 15px;
+      accent-color: #6366f1;
+      cursor: pointer;
+    }
+
+    .checkbox-item span { font-size: 12px; color: #374151; }
+
+    .divider { height: 1px; background: #e2e8f0; margin: 14px 0; }
+
+    .btn-print {
+      width: 100%;
+      padding: 11px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .btn-print:hover { opacity: 0.92; }
+    .btn-print:active { transform: scale(0.98); }
+
+    .status {
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 7px;
+      font-size: 12px;
+      text-align: center;
+      display: none;
+    }
+
+    .status.error  { background: #fee2e2; color: #dc2626; display: block; }
+    .status.success { background: #dcfce7; color: #16a34a; display: block; }
+    .status.info   { background: #e0e7ff; color: #4338ca; display: block; }
+
+    .tip {
+      margin-top: 10px;
+      padding: 8px 10px;
+      background: #fffbeb;
+      border-left: 3px solid #f59e0b;
+      border-radius: 0 6px 6px 0;
+      font-size: 11px;
+      color: #92400e;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📄 দাঁড়িকমা প্রিন্ট হেল্পার</h1>
+    <p>MCQ প্রশ্ন সুন্দরভাবে প্রিন্ট করুন</p>
+  </div>
+
+  <div class="body">
+    <div class="field-group">
+      <label>📝 পরীক্ষার বিষয়/অধ্যায় </label>
+      <input type="text" id="examTitle" placeholder="যেমন: রসায়ন ১ম পত্র - অধ্যায় ১" />
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>🏫 অধ্যায়/টপিক এর নাম </label>
+        <input type="text" id="subjectInfo" placeholder="সেট ও ফাংশন" />
+      </div>
+      <div class="field-group">
+        <label>⏱️ সময়</label>
+        <input type="text" id="examTime" placeholder="২০ মিনিট" />
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field-group">
+      <label>⚙️ প্রিন্ট অপশন</label>
+      <div class="checkbox-group">
+        <label class="checkbox-item">
+          <input type="checkbox" id="showOMR" checked />
+          <span>নিচে OMR শীট যোগ করো</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" id="showAnswers" />
+          <span>উত্তরপত্র আলাদাভাবে দেখাও</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" id="twoColumns" />
+          <span>দুই কলামে সাজাও (ছোট প্রশ্নের জন্য)</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" id="showNumbers" checked />
+          <span>প্রশ্ন নম্বর দেখাও</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>📄 কাগজের সাইজ</label>
+      <select id="paperSize">
+        <option value="A4">A4 (সাধারণ)</option>
+        <option value="letter">Letter</option>
+        <option value="A5">A5 (ছোট)</option>
+      </select>
+    </div>
+
+    <div class="divider"></div>
+
+    <button class="btn-print" id="btnPrint">
+      🖨️ প্রিন্ট উইন্ডো খুলুন
+    </button>
+
+    <div class="status" id="statusMsg"></div>
+
+    <div class="tip">
+      💡 <strong>টিপস:</strong> প্রশ্ন পেজে থাকা অবস্থায় এই বাটনে ক্লিক করুন। প্রিন্ট উইন্ডোতে "Save as PDF" দিয়ে PDF বানাতে পারবেন।
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

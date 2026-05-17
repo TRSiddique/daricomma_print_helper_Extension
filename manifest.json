@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "দাঁড়িকমা প্রিন্ট হেল্পার",
+  "version": "1.0",
+  "description": "daricomma.com থেকে MCQ প্রশ্ন সুন্দরভাবে প্রিন্ট করুন",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://daricomma.com/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
